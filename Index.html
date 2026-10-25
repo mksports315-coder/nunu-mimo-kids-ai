@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nunu Mimo Kids AI - کارٹون جنریٹر</title>
+    <style>
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #4ecdc4;
+            --accent: #ffe66d;
+            --dark: #2d3436;
+            --light: #f7f1e3;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #74b9ff, #a29bfe);
+            color: var(--dark);
+            margin: 0;
+            padding: 10px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        h1 {
+            text-align: center;
+            color: var(--primary);
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        p.subtitle {
+            text-align: center;
+            color: #636e72;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--dark);
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #dfe6e9;
+            border-radius: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+            outline: none;
+            transition: 0.3s;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--secondary);
+        }
+        button.generate-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(255, 107, 107, 0.4);
+            transition: 0.2s;
+        }
+        button.generate-btn:active {
+            transform: scale(0.98);
+        }
+        .output-section {
+            margin-top: 25px;
+            background: var(--light);
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+        }
+        .output-box {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-right: 4px solid var(--secondary);
+            position: relative;
+        }
+        .output-box h3 {
+            margin: 0 0 5px 0;
+            font-size: 16px;
+            color: #0984e3;
+        }
+        .copy-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            float: left;
+            margin-top: -30px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Nunu Mimo Kids AI</h1>
+    <p class="subtitle">بچوں کے لیے 3D کارٹون اور کہانیاں بنانے کا ٹول</p>
+
+    <div class="form-group">
+        <label for="storyType">کہانی کی قسم منتخب کریں:</label>
+        <select id="storyType">
+            <option value="funny_animal">مزاحیہ جانوروں کی کہانی</option>
+            <option value="moral_story">اخلاقی اور سبق آموز کہانی</option>
+            <option value="adventure">جادوئی اور ایڈونچر کہانی</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="charName">مرکزی کردار کا نام:</label>
+        <input type="text" id="charName" placeholder="مثلاً: ميمو بلی، نونو ریچھ">
+    </div>
+
+    <div class="form-group">
+        <label for="language">زبان منتخب کریں:</label>
+        <select id="language">
+            <option value="ur">اردو</option>
+            <option value="en">انگریزی (English)</option>
+        </select>
+    </div>
+
+    <button class="generate-btn" onclick="generateContent()">پرومپٹس اور کہانی تیار کریں</button>
+
+    <div class="output-section" id="outputSection">
+        <div class="output-box">
+            <h3>کہانی (Story)</h3>
+            <button class="copy-btn" onclick="copyText('storyText')">کاپی کریں</button>
+            <p id="storyText"></p>
+        </div>
+
+        <div class="output-box">
+            <h3>3D کارٹون امیج پرومپට්</h3>
+            <button class="copy-btn" onclick="copyText('imagePromptText')">کاپی کریں</button>
+            <p id="imagePromptText"></p>
+        </div>
+
+        <div class="output-box">
+            <h3>ویڈیو پرومپට් (سين کے لیے)</h3>
+            <button class="copy-btn" onclick="copyText('videoPromptText')">کاپی کریں</button>
+            <p id="videoPromptText"></p>
+        </div>
+
+        <div class="output-box">
+            <h3>کرداروں کے مکالمے (Dialogue Script)</h3>
+            <button class="copy-btn" onclick="copyText('dialogueText')">کاپی کریں</button>
+            <p id="dialogueText"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+function generateContent() {
+    const type = document.getElementById('storyType').value;
+    const name = document.getElementById('charName').value || "Nunu";
+    const lang = document.getElementById('language').value;
+
+    let story = "";
+    let imagePrompt = "";
+    let videoPrompt = "";
+    let dialogue = "";
+
+    if (lang === 'ur') {
+        story = `ایک دفعہ کا ذکر ہے کہ ${name} نام کا ایک بہت پیارا اور شرارتی کردار جنگل میں رہتا تھا۔ ایک دن اس نے ایک انوکھا کام کرنے کا سوچا جس سے سب کو بہت ہنسی آئی۔`;
+        imagePrompt = `3D Pixar style cute cartoon character ${name}, vibrant colors, cute facial expression, cinematic lighting, Disney animation style, 8k resolution.`;
+        videoPrompt = `Smooth 3D animation of ${name} walking happily in a colorful cartoon forest, smiling, high quality, kids cartoon style.`;
+        dialogue = `${name}: ارے واہ! آج کا دن تو بہت مزے کا ہونے والا ہے!`;
+    } else {
+        story = `Once upon a time, a cute and mischievous character named ${name} lived in a magical forest. One day, he planned a funny adventure that made everyone laugh.`;
+        imagePrompt = `3D Pixar style cute cartoon character ${name}, vibrant colors, cute facial expression, cinematic lighting, Disney animation style, 8k resolution.`;
+        videoPrompt = `Smooth 3D animation of ${name} walking happily in a colorful cartoon forest, smiling, high quality, kids cartoon style.`;
+        dialogue = `${name}: Wow! Today is going to be so much fun!`;
+    }
+
+    document.getElementById('storyText').innerText = story;
+    document.getElementById('imagePromptText').innerText = imagePrompt;
+    document.getElementById('videoPromptText').innerText = videoPrompt;
+    document.getElementById('dialogueText').innerText = dialogue;
+
+    document.getElementById('outputSection').style.display = 'block';
+}
+
+function copyText(elementId) {
+    const text = document.getElementById(elementId).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+        alert('مواد کامیابی سے کاپی ہو گیا ہے!');
+    });
+}
+</script>
+
+</body>
+</html>

@@ -2,104 +2,70 @@
 <html lang="ur" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nunu Mimo Kids AI - Free 10 Sec Video</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Nunu Mimo PRO - 1 Click 10 Sec Video</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:linear-gradient(135deg,#8EC5FC,#E0C3FC);min-height:100vh;padding:15px}
-.card{max-width:480px;margin:0 auto;background:white;border-radius:25px;padding:20px}
-h1{color:#FF5A5A;text-align:center}
-.sub{text-align:center;margin:8px 0 18px}
-select,input{width:100%;padding:14px;border:2px solid #E8E8E8;border-radius:14px;background:#F9F9F9}
-.btn-main{width:100%;margin-top:18px;padding:16px;background:linear-gradient(135deg,#FF6B6B,#FF8E53);color:white;border:none;border-radius:16px;font-size:18px;font-weight:bold;cursor:pointer}
-.box{margin-top:16px;background:#FFF9F0;border-right:5px solid #00BFA6;border-radius:14px;padding:14px}
-.copy{float:left;background:#00BFA6;color:white;border:none;padding:6px 12px;border-radius:8px;cursor:pointer}
-#videoArea{margin-top:20px;text-align:center;display:none}
-canvas{width:100%;max-width:360px;border-radius:20px;background:#000}
-.btn-video{width:100%;margin-top:12px;padding:14px;background:linear-gradient(135deg,#00BFA6,#00ACC1);color:white;border:none;border-radius:14px;font-weight:bold;cursor:pointer}
-.btn-download{display:none;width:100%;margin-top:10px;padding:14px;background:#222;color:white;border:none;border-radius:14px;cursor:pointer}
+*{box-sizing:border-box;font-family:system-ui}body{background:linear-gradient(135deg,#667eea,#764ba2);padding:10px}
+.card{max-width:500px;margin:0 auto;background:#fff;border-radius:20px;padding:16px}
+h1{text-align:center;color:#FF3B30}label{font-weight:700;margin:10px 0 5px;display:block}
+select,input,textarea{width:100%;padding:12px;border:2px solid #eee;border-radius:12px;background:#fafafa}
+.btn{width:100%;padding:14px;background:#FF3B30;color:#fff;border:none;border-radius:12px;font-weight:800;margin-top:12px;cursor:pointer;font-size:16px}
+canvas{width:100%;max-width:360px;height:640px;background:#000;border-radius:16px;display:block;margin:12px auto;border:3px solid #FF3B30}
+.vbtn{width:100%;padding:13px;background:#00c853;color:#fff;border:none;border-radius:12px;font-weight:800;cursor:pointer}
+.dbtn{width:100%;padding:12px;background:#000;color:#fff;border:none;border-radius:12px;font-weight:700;margin-top:8px;display:none;cursor:pointer}
+.box{background:#f8f8ff;border:2px solid #eee;border-radius:12px;padding:10px;margin-top:10px;white-space:pre-wrap;font-size:13px}
 </style>
 </head>
 <body>
 <div class="card">
-<h1>Nunu Mimo Kids AI</h1>
-<p class="sub">بچوں کے لیے 3D کہانیاں + FREE 10 Sec Video</p>
-<label>کہانی کی قسم:</label>
-<select id="storyType">
-<option value="funny">مزاحیہ جانوروں کی کہانی</option>
-<option value="moral">اخلاقی کہانی</option>
-<option value="adventure">ایڈونچر</option>
-<option value="pushpa">پشپا بلی والی وائرل</option>
-<option value="gabbar">گبر والی مزاحیہ</option>
-</select>
-<label>مرکزی کردار کا نام:</label>
-<input id="charName" placeholder="مثلاً: میمو بلی، پشپا بلی">
-<label>زبان:</label>
-<select id="lang"><option value="ur">اردو</option><option value="hi">ہندی</option><option value="en">English</option></select>
-<button class="btn-main" onclick="generateAll()">پرومپٹس اور کہانی تیار کریں</button>
-<div id="output"></div>
-<div id="videoArea">
-<h3>🎬 فری 10 سیکنڈ ویڈیو (ڈائیلاگ کے ساتھ)</h3>
-<canvas id="videoCanvas" width="720" height="1280"></canvas>
-<button class="btn-video" onclick="make10SecVideo()">🔊 10 سیکنڈ کی ویڈیو بنائیں + ڈائیلاگ بولیں</button>
-<button id="downloadBtn" class="btn-download">⬇️ ویڈیو ڈاؤن لوڈ کریں</button>
+<h1>Nunu Mimo PRO 🚀</h1>
+<p style="text-align:center;color:#666;font-size:12px">1 Click = Story + AI Image + 10 Sec Video + Dialogue</p>
+<label>کہانی کی قسم</label>
+<select id="type"><option value="funny">مزاحیہ</option><option value="moral">اخلاقی</option><option value="adventure">ایڈونچر</option><option value="viral">وائرل سٹائل</option></select>
+<label>کردار کا نام</label>
+<input id="name" value="Nunu Billi" placeholder="Nunu Billi">
+<label>ویڈیو پرومپٹ (Auto bhi ban jayega)</label>
+<textarea id="vprompt">Cute 3D cartoon cat, Pixar style, jungle, happy, cinematic</textarea>
+<label>ڈائیلاگ</label>
+<input id="dia" value="Nunu: Aaj ka din bohat mazedar hai!">
+<button class="btn" onclick="genPRO()">🚀 PRO - 1 Click Me Sab Kuch Banao</button>
+<div id="out"></div>
+<div id="vbox" style="display:none;margin-top:14px;text-align:center;border-top:3px dashed #FF3B30;padding-top:12px">
+<h3 style="color:#FF3B30">🎬 PRO 10 Sec Video</h3>
+<canvas id="c" width="720" height="1280"></canvas>
+<button class="vbtn" id="vb" onclick="makeVideo()">🔊 1 Click Me 10 Sec Video + Dialogue Banao</button>
+<button class="dbtn" id="db">⬇️ Video Download (YouTube Shorts)</button>
 </div>
 </div>
 <script>
-let currentDialogue=""; let recordedBlob=null;
-const stories={
- funny:(n)=>`ایک دفعہ کا ذکر ہے کہ ${n} جنگل میں رہتا تھا۔ ایک دن اس نے انوکھا کام کیا جس سے سب ہنسنے لگے۔`,
- pushpa:(n)=>`پشپا نام سن کے فلاور سمجھے کیا؟ فائر ہے فائر! ${n} بولی: جھکے گی نہیں سالا!`,
- gabbar:(n)=>`ارے او سامبھا! ${n} سارا دودھ پی گئی! گبر ہنسنے لگا۔`
-};
-function generateAll(){
- let name=document.getElementById('charName').value.trim()||"Nunu";
- let type=document.getElementById('storyType').value;
- let story=stories[type]?stories[type](name):stories.funny(name);
- let dialogue=type==='pushpa'?`${name}: پشپا جھکے گی نہیں سالا!`:type==='gabbar'?`${name}: گبر! دودھ میں نے پیا!`:`${name}: ارے واہ! آج کا دن بہت مزے کا ہے!`;
- currentDialogue=dialogue;
- let imgPrompt=`3D Pixar cute ${name}, vibrant, Disney style, 8k`;
- let vidPrompt=`Smooth 3D animation of ${name} walking happily, 10 seconds`;
- document.getElementById('output').innerHTML=`
- <div class="box"><h3>کہانی</h3><div>${story}</div></div>
- <div class="box"><h3>Dialogue - یہی بولے گا</h3><div>${dialogue}</div></div>
- <div class="box"><h3>Image Prompt</h3><div>${imgPrompt}</div></div>`;
- document.getElementById('videoArea').style.display='block';
+let aiImg=new Image();aiImg.crossOrigin="anonymous";let curDia="",curName="";
+function genPRO(){
+let n=document.getElementById('name').value||"Nunu Billi";let t=document.getElementById('type').value;
+let vp=document.getElementById('vprompt').value;let d=document.getElementById('dia').value;
+curName=n;curDia=d;
+let story=`${n} ki kahani: Ek din ${n} jungle me gaya, bohat maza kiya, sab hasne lage. Type: ${t}`;
+document.getElementById('out').innerHTML=`<div class="box"><b>کہانی:</b>\n${story}</div><div class="box"><b>ڈائیلاگ:</b>\n${d}</div>`;
+document.getElementById('vbox').style.display='block';
+let seed=Math.floor(Math.random()*9999);
+let url=`https://image.pollinations.ai/prompt/${encodeURIComponent(vp+" "+n)}?width=720&height=1280&seed=${seed}&nologo=true`;
+aiImg.onload=()=>{};aiImg.src=url;
+document.getElementById('vbox').scrollIntoView({behavior:'smooth'});
 }
-async function make10SecVideo(){
- const canvas=document.getElementById('videoCanvas'); const ctx=canvas.getContext('2d');
- const btn=document.querySelector('.btn-video'); btn.innerText='⏳ ویڈیو بن رہی ہے...';
- let name=document.getElementById('charName').value.trim()||"Nunu";
- if('speechSynthesis' in window){
-   speechSynthesis.cancel();
-   let utter=new SpeechSynthesisUtterance(currentDialogue);
-   utter.lang='ur-PK'; utter.rate=0.9; speechSynthesis.speak(utter);
- }
- const stream=canvas.captureStream(30);
- const recorder=new MediaRecorder(stream,{mimeType:'video/webm'});
- let chunks=[]; recorder.ondataavailable=e=>chunks.push(e.data);
- recorder.onstop=()=>{
-   recordedBlob=new Blob(chunks,{type:'video/webm'});
-   let url=URL.createObjectURL(recordedBlob);
-   let dl=document.getElementById('downloadBtn'); dl.style.display='block';
-   dl.onclick=()=>{let a=document.createElement('a'); a.href=url; a.download=`${name}_10sec.webm`; a.click();};
-   btn.innerText='✅ ویڈیو تیار! دوبارہ بنائیں';
- };
- recorder.start(); let start=Date.now();
- function draw(){
-   let elapsed=(Date.now()-start)/1000; if(elapsed>10){recorder.stop(); return;}
-   ctx.fillStyle=`rgb(${100+Math.sin(elapsed)*30},${180},${255-elapsed*5})`;
-   ctx.fillRect(0,0,720,1280);
-   ctx.fillStyle='#2E7D32'; ctx.fillRect(0,1000,720,280);
-   let bounce=Math.sin(elapsed*3)*20; let x=360+Math.sin(elapsed)*100; let y=650+bounce;
-   ctx.beginPath(); ctx.arc(x,y,80,0,Math.PI*2); ctx.fillStyle='#FFCC80'; ctx.fill();
-   ctx.font='70px Arial'; ctx.textAlign='center'; ctx.fillText('🐱',x,y+25);
-   ctx.fillStyle='white'; ctx.font='bold 50px Arial'; ctx.fillText(name,360,200);
-   ctx.fillStyle='rgba(0,0,0,0.7)'; ctx.fillRect(30,1050,660,180);
-   ctx.fillStyle='white'; ctx.font='22px Arial'; ctx.fillText(currentDialogue.substring(0,40),360,1120);
-   requestAnimationFrame(draw);
- }
- draw();
+function makeVideo(){
+const canvas=document.getElementById('c');const ctx=canvas.getContext('2d');
+document.getElementById('vb').innerText='⏳ Video Ban Rahi Hai 10s...';
+try{speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(curDia);u.lang='ur-PK';u.rate=0.9;speechSynthesis.speak(u);}catch(e){}
+const stream=canvas.captureStream(30);const rec=new MediaRecorder(stream,{mimeType:'video/webm;codecs=vp9'});let ch=[];
+rec.ondataavailable=e=>ch.push(e.data);
+rec.onstop=()=>{let b=new Blob(ch,{type:'video/webm'});let url=URL.createObjectURL(b);let db=document.getElementById('db');db.style.display='block';db.onclick=()=>{let a=document.createElement('a');a.href=url;a.download=curName+'_10sec.webm';a.click();};document.getElementById('vb').innerText='✅ Video Ready!';};
+rec.start();let s=Date.now();
+function draw(){let el=(Date.now()-s)/1000;if(el>=10){rec.stop();return;}
+try{if(aiImg.complete&&aiImg.naturalWidth>0)ctx.drawImage(aiImg,0,0,720,1280);else{ctx.fillStyle='#000';ctx.fillRect(0,0,720,1280);ctx.font='100px Arial';ctx.textAlign='center';ctx.fillText('🐱',360,600);}}catch(e){}
+ctx.fillStyle='rgba(0,0,0,0.8)';ctx.fillRect(0,1050,720,230);ctx.fillStyle='#fff';ctx.font='bold 24px Arial';ctx.textAlign='center';ctx.fillText(curDia.slice(0,55),360,1110);
+ctx.fillStyle='rgba(255,59,48,0.9)';ctx.fillRect(0,0,720,50);ctx.fillStyle='#fff';ctx.font='bold 28px Arial';ctx.fillText(curName,360,35);
+ctx.fillStyle='#fff';ctx.fillRect(600,70,100,35);ctx.fillStyle='#000';ctx.font='bold 20px Arial';ctx.fillText((10-el).toFixed(1)+'s',650,94);
+ctx.strokeStyle='#FF3B30';ctx.lineWidth=5;ctx.strokeRect(0,0,720,1280);
+requestAnimationFrame(draw);}draw();
 }
 </script>
 </body>
